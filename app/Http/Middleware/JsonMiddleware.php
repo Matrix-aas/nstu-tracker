@@ -37,6 +37,11 @@ class JsonMiddleware
                 'message' => $response->getOriginalContent(),
                 'status' => $response->status()
             ], $response->status(), $response->headers->all());
+        } else if (is_bool($response->getOriginalContent())) {
+            $response = new JsonResponse([
+                'message' => $response->getOriginalContent() ? 'success' : 'fail',
+                'status' => $response->status()
+            ], $response->status(), $response->headers->all());
         } else {
             $content = json_decode($response->content(), true);
             if (is_array($content)) {

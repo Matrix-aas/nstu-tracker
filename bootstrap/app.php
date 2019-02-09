@@ -51,9 +51,14 @@ $app->singleton(
 /** Repositories bindings */
 
 $app->singleton(
-    \App\Models\Services\Repositories\IGroupRepository::class,
-    \App\Models\Services\Repositories\GroupRepository::class
+    \App\Services\Repositories\IGroupRepository::class,
+    \App\Services\Repositories\GroupRepository::class
 );
+
+/** Services bindings */
+$app->singleton(
+    \App\Services\IGroupService::class,
+    \App\Services\GroupService::class);
 
 /*
 |--------------------------------------------------------------------------

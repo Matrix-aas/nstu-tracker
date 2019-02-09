@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Services\Repositories;
+namespace App\Services\Repositories;
 
 interface IGroupRepository extends IRepository
 {

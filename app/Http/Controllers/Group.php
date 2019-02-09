@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Services\Repositories\IGroupRepository;
+use App\Services\IGroupService;
 
 class Group extends Controller
 {
-    private $groupRepository;
+    private $groupService;
 
-    public function __construct(IGroupRepository $groupRepository)
+    public function __construct(IGroupService $groupService)
     {
-        $this->groupRepository = $groupRepository;
+        $this->groupService = $groupService;
     }
 
     public function findAll()
     {
-        return $this->groupRepository->findAll();
+        return $this->groupService->findAll();
     }
 }

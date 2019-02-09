@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models\Services\Repositories;
+namespace App\Services\Repositories;
 
 
 use Illuminate\Database\Eloquent\Collection;
@@ -20,7 +20,7 @@ interface IRepository
      * @param int $id
      * @return Model
      */
-    public function find(int $id): Model;
+    public function findById(int $id): Model;
 
     /**
      * Save entity
