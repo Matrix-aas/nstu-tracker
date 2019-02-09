@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
+/**
+ * Abstract Class User
+ * @property integer $id
+ * @property string $login
+ * @property string $firstname
+ * @property string $surname
+ * @property string $middlename
+ * @property string $password
+ * @package App\Models\Users
+ */
 abstract class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
