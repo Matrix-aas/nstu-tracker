@@ -9,3 +9,5 @@ Installation:
 3. do `php artisan migrate`
 
 4. Enjoy it!
+
+*For create new admin, use: `php artisan make:admin "Login"`*

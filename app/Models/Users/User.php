@@ -39,4 +39,11 @@ abstract class User extends Model implements AuthenticatableContract, Authorizab
     protected $hidden = [
         'password',
     ];
+
+    public $validationRules = [
+        "login" => "required|string|min:3",
+        "firstname" => "required|string|min:2",
+        "surname" => "required|string|min:2",
+        "middlename" => "required|string|min:2"
+    ];
 }

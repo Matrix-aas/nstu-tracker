@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\DTO\AbstractDTO;
+use App\DTO\AbstractDTO;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

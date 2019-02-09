@@ -3,13 +3,11 @@
 
 namespace App\Services;
 
-
-use App\Models\DTO\AbstractDTO;
 use App\Services\Repositories\IGroupRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class GroupService implements IGroupService
+class GroupService extends EmptyCrudService implements IGroupService
 {
     private $groupRepository;
 
@@ -26,16 +24,6 @@ class GroupService implements IGroupService
     public function findById(int $id): Model
     {
         return $this->groupRepository->findById($id);
-    }
-
-    public function update(AbstractDTO $dto): bool
-    {
-        return false;
-    }
-
-    public function save(AbstractDTO $dto): bool
-    {
-        return false;
     }
 
     public function delete(int $id): bool

@@ -21,6 +21,6 @@ $router->group(['prefix' => 'professor'], function (\Laravel\Lumen\Routing\Route
     $router->get(null, "Professor@findAll");
 });
 
-$router->group(['prefix' => 'group'], function (\Laravel\Lumen\Routing\Router $router) {
+$router->group(['prefix' => 'group', 'middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
     $router->get(null, "Group@findAll");
 });

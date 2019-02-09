@@ -14,5 +14,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+
+        foreach (glob(app()->path() . '/Helpers/*.php') as $file) {
+            require_once($file);
+        }
     }
 }

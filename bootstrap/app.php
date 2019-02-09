@@ -51,14 +51,68 @@ $app->singleton(
 /** Repositories bindings */
 
 $app->singleton(
+    \App\Services\Repositories\Users\IStudentRepository::class,
+    \App\Services\Repositories\Users\StudentRepository::class
+);
+
+$app->singleton(
+    \App\Services\Repositories\Users\IProfessorRepository::class,
+    \App\Services\Repositories\Users\ProfessorRepository::class
+);
+
+$app->singleton(
+    \App\Services\Repositories\Users\IAdminRepository::class,
+    \App\Services\Repositories\Users\AdminRepository::class
+);
+
+$app->singleton(
     \App\Services\Repositories\IGroupRepository::class,
     \App\Services\Repositories\GroupRepository::class
 );
 
+$app->singleton(
+    \App\Services\Repositories\IVisitRepository::class,
+    \App\Services\Repositories\VisitRepository::class
+);
+
+$app->singleton(
+    \App\Services\Repositories\ILessonRepository::class,
+    \App\Services\Repositories\LessonRepository::class
+);
+
+$app->singleton(
+    \App\Services\Repositories\IDisciplineRepository::class,
+    \App\Services\Repositories\DisciplineRepository::class
+);
+
 /** Services bindings */
+$app->singleton(
+    \App\Services\Users\IStudentService::class,
+    \App\Services\Users\StudentService::class);
+
+$app->singleton(
+    \App\Services\Users\IAdminService::class,
+    \App\Services\Users\AdminService::class);
+
+$app->singleton(
+    \App\Services\Users\IProfessorService::class,
+    \App\Services\Users\ProfessorService::class);
+
 $app->singleton(
     \App\Services\IGroupService::class,
     \App\Services\GroupService::class);
+
+$app->singleton(
+    \App\Services\IVisitService::class,
+    \App\Services\VisitService::class);
+
+$app->singleton(
+    \App\Services\ILessonService::class,
+    \App\Services\LessonService::class);
+
+$app->singleton(
+    \App\Services\IDisciplineService::class,
+    \App\Services\DisciplineService::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -71,9 +125,9 @@ $app->singleton(
 |
 */
 
-/*$app->routeMiddleware([
+$app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
-]);*/
+]);
 
 $app->middleware([
     App\Http\Middleware\JsonMiddleware::class
