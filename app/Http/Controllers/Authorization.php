@@ -9,6 +9,7 @@ use App\Services\Users\IProfessorService;
 use App\Services\Users\IStudentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class Authorization extends Controller
 {
@@ -30,35 +31,73 @@ class Authorization extends Controller
         $this->adminService = $adminService;
     }
 
-    public function authStudent(Request $request)
-    {
-
-    }
-
-    public function authProfessor(Request $request)
-    {
-
-    }
-
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return array
+     * @throws ValidationException
      */
-    public function authAdmin(Request $request)
+    private function getAuthData(Request $request)
     {
         $validator = Validator::make($request->post(), [
             "login" => "required|string|min:3",
-            "password" => "required|string|min:3"
+            "password" => "required|string|min:3",
+            "remember" => "sometimes|boolean",
+            "ip_verify" => "sometimes|boolean"
         ]);
         if ($validator->fails()) {
-            return response($validator->getMessageBag()->first(), 400);
+            throw new ValidationException($validator);
         }
 
         $login = $request->post("login");
         $password = $request->post("password");
 
-        $token = $this->adminService->authAdmin($login, $password, $request->ip(), false);
+        $remember = $request->post("remember", false);
+        $ip_verify = $request->post("ip_verify", true);
+
+        return [$login, $password, $remember, $ip_verify];
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function authStudent(Request $request)
+    {
+        list($login, $password, $remember, $ip_verify) = $this->getAuthData($request);
+
+        $token = $this->studentService->auth($login, $password, $ip_verify ? $request->ip() : null, $remember);
+
+        return response()->json(['token' => $token]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function authProfessor(Request $request)
+    {
+        list($login, $password, $remember, $ip_verify) = $this->getAuthData($request);
+
+        $token = $this->professorService->auth($login, $password, $ip_verify ? $request->ip() : null, $remember);
+
+        return response()->json(['token' => $token]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws ValidationException
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function authAdmin(Request $request)
+    {
+        list($login, $password, $remember, $ip_verify) = $this->getAuthData($request);
+
+        $token = $this->adminService->auth($login, $password, $ip_verify ? $request->ip() : null, $remember);
 
         return response()->json(['token' => $token]);
     }

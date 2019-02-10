@@ -18,5 +18,5 @@ interface IAdminService
      * @throws AuthorizationException
      * @throws \RuntimeException
      */
-    public function authAdmin($login, $plainPassword, $ip = null, $remeber = false): string;
+    public function auth($login, $plainPassword, $ip = null, $remeber = false): string;
 }

@@ -52,7 +52,7 @@ class AdminService implements IAdminService
      * @throws AuthorizationException
      * @throws \RuntimeException
      */
-    public function authAdmin($login, $plainPassword, $ip = null, $remeber = false): string
+    public function auth($login, $plainPassword, $ip = null, $remeber = false): string
     {
         /** @var Admin $admin */
         $admin = $this->findByLoginAndPassword($login, $plainPassword);
