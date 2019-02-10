@@ -30,4 +30,5 @@ $router->group(['prefix' => 'auth'], function (\Laravel\Lumen\Routing\Router $ro
 /** == Authorized requests == */
 $router->group(['middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
     \App\Http\Controllers\Group::setupRouter($router);
+    \App\Http\Controllers\Discipline::setupRouter($router);
 });

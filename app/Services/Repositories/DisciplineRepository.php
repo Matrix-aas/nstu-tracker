@@ -2,6 +2,9 @@
 
 namespace App\Services\Repositories;
 
-class DisciplineRepository implements IDisciplineRepository
+use App\Models\Discipline;
+
+class DisciplineRepository extends AbstractCrudRepository implements IDisciplineRepository
 {
+    protected $modelClass = Discipline::class;
 }

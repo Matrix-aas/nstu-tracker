@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class GroupDTO extends AbstractDTO
+class DisciplineDTO extends AbstractDTO
 {
     /**
      * @var integer

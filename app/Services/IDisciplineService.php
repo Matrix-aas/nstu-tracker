@@ -2,6 +2,6 @@
 
 namespace App\Services;
 
-interface IDisciplineService
+interface IDisciplineService extends IAbstractCrudService
 {
 }

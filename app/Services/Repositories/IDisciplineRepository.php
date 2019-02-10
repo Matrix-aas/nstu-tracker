@@ -2,7 +2,6 @@
 
 namespace App\Services\Repositories;
 
-interface IDisciplineRepository
+interface IDisciplineRepository extends IAbstractCrudRepository
 {
-
 }
