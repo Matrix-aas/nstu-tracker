@@ -2,6 +2,6 @@
 
 namespace App\Services\Repositories;
 
-interface IGroupRepository
+interface IGroupRepository extends IAbstractCrudRepository
 {
 }

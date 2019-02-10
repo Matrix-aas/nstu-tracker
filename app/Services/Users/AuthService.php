@@ -22,7 +22,7 @@ class AuthService implements IAuthService
     public function getAllTokensData()
     {
         if (!Auth::check())
-            return response("Unauthorized.", 401);
+            throw new UnauthorizedException("Unauthorized.");
 
         /** @var User $authUser */
         $authUser = Auth::user();
@@ -34,7 +34,7 @@ class AuthService implements IAuthService
             $tokens[] = [
                 "token" => $token->token,
                 "ip" => $token->ip,
-                "expired_at" => $token->updated_at->addMinutes(ApiToken::TOKEN_EXPIRED_MINUTES),
+                "expired_at" => $token->isRemembered() ? false : $token->updated_at->addMinutes(ApiToken::TOKEN_EXPIRED_MINUTES)->format("Y-m-d H:i:s"),
                 "remembered" => $token->isRemembered()
             ];
         }

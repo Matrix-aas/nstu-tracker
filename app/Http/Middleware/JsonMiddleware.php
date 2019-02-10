@@ -32,6 +32,8 @@ class JsonMiddleware
         /** @var Response $response */
         $response = $next($request);
 
+        $response->headers->set('Content-Type', 'application/json');
+
         if (is_string($response->getOriginalContent())) {
             $response = new JsonResponse([
                 'message' => $response->getOriginalContent(),
@@ -40,11 +42,15 @@ class JsonMiddleware
         } else {
             $content = json_decode($response->content(), true);
             if (is_array($content)) {
-                $response = new JsonResponse([
+                $data = [
                     'status' => $response->status(),
                     'message' => isset($content['message']) ? $content['message'] : ($response->status() == 200 ? 'OK' : 'Error'),
                     'data' => $content
-                ], $response->status(), $response->headers->all());
+                ];
+                if (count($content) == 1 && isset($content['message'])) {
+                    unset($data['data']);
+                }
+                $response = new JsonResponse($data, $response->status(), $response->headers->all());
             }
         }
 

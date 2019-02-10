@@ -7,6 +7,11 @@ namespace App\DTO;
 class AdminDTO extends AbstractDTO
 {
     /**
+     * @var integer
+     */
+    public $id = null;
+
+    /**
      * @var string
      */
     public $login;

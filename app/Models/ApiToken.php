@@ -11,15 +11,20 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ApiToken
+ *
  * @property string $token
  * @property string $ip
  * @property integer $user_id
  * @property integer $user_role
  * @property boolean $remember
- * @property Carbon created_at
- * @property Carbon updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @property User $user
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiToken newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiToken newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiToken query()
+ * @mixin \Eloquent
  */
 class ApiToken extends Model
 {

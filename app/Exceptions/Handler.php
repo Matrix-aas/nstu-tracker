@@ -50,6 +50,12 @@ class Handler extends ExceptionHandler
             'message' => $e->getMessage()
         ];
 
+        if ($e instanceof ValidationException && !empty($e->errors())) {
+            $response['message'] = implode("; ", array_map(function ($value) {
+                return $value[0];
+            }, $e->errors()));
+        }
+
         // If the app is in debug mode
         if (env('APP_DEBUG', config('app.debug', false))) {
             // Add the exception class name, message and stack trace to response

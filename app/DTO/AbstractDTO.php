@@ -2,11 +2,12 @@
 
 namespace App\DTO;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-abstract class AbstractDTO
+abstract class AbstractDTO implements Arrayable
 {
     private $validationRules = null;
     private $validationMessages = null;
@@ -44,11 +45,27 @@ abstract class AbstractDTO
      * @param null $messages
      * @return $this
      */
-    public function setValidationRules($rules, $messages = null)
+    public function setValidationRules(array $rules, array $messages = null)
     {
         $this->validationRules = $rules;
         $this->validationMessages = $messages;
         return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getValidationRules()
+    {
+        return $this->validationRules;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getValidationMessages()
+    {
+        return $this->validationMessages;
     }
 
     /**
@@ -88,14 +105,21 @@ abstract class AbstractDTO
     }
 
     /**
-     * Create Model and fill it attributes from DTO
+     * Create or load Model and fill it attributes from DTO
      * @param string $modelClass
      * @return Model
      * @throws ValidationException
      */
     public function buildModel(string $modelClass): Model
     {
-        $model = new $modelClass();
+        if (property_exists($this, "id") && !empty($this->getId())) {
+            $model = $modelClass::query()->find($this->getId());
+            if (!$model)
+                $model = new $modelClass();
+            /** @var Model $model */
+            $model->setAttribute($model->getKeyName(), $this->getId());
+        } else
+            $model = new $modelClass();
         $this->toModel($model);
         return $model;
     }

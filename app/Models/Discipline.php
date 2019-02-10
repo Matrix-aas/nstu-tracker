@@ -10,11 +10,16 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Discipline
+ *
  * @property integer $id
  * @property string $name
  * @property Collection $professors
  * @property Collection $lessons
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Discipline newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Discipline newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Discipline query()
+ * @mixin \Eloquent
  */
 class Discipline extends Model
 {

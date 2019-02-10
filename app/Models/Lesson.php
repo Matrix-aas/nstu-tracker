@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Lesson
+ *
  * @property integer $id
  * @property string $name
  * @property Carbon $datetime
@@ -19,6 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property Discipline $discipline
  * @property Collection $groups
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Lesson newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Lesson newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Lesson query()
+ * @mixin \Eloquent
  */
 class Lesson extends Model
 {

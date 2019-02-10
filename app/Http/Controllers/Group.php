@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Services\IGroupService;
 
-class Group extends Controller
+class Group extends AbstractCrudController
 {
-    private $groupService;
-
     public function __construct(IGroupService $groupService)
     {
-        $this->groupService = $groupService;
+        parent::__construct($groupService);
     }
 }

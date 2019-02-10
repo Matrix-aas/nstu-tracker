@@ -18,17 +18,16 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
-    $router->get(null, "Authorization@getAllData");
     $router->post('student', "Authorization@authStudent");
     $router->post('professor', "Authorization@authProfessor");
     $router->post('admin', "Authorization@authAdmin");
     $router->group(['middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
+        $router->get(null, "Authorization@getAllData");
         $router->post('logout', "Authorization@logout");
     });
 });
 
-$router->group(['prefix' => 'test', 'middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
-    $router->get(null, function () {
-        return "WOW!";
-    });
+/** == Authorized requests == */
+$router->group(['middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
+    \App\Http\Controllers\Group::setupRouter($router);
 });

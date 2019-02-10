@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class Professor
+ *
  * @property integer $id
  * @property string $login
  * @property string $firstname
@@ -15,6 +16,10 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string $password
  * @property Collection $disciplines
  * @package App\Models\Users
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Users\Professor newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Users\Professor newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Users\Professor query()
+ * @mixin \Eloquent
  */
 class Professor extends User
 {

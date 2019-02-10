@@ -2,6 +2,6 @@
 
 namespace App\Services;
 
-interface IGroupService
+interface IGroupService extends IAbstractCrudService
 {
 }

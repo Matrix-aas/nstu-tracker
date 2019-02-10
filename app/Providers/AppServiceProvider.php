@@ -19,4 +19,9 @@ class AppServiceProvider extends ServiceProvider
             require_once($file);
         }
     }
+
+    public function boot()
+    {
+        date_default_timezone_set('Asia/Novosibirsk');
+    }
 }

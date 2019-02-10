@@ -9,12 +9,17 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Visit
+ *
  * @property integer $id
  * @property integer $lesson_id
  * @property integer $student_id
  * @property Lesson $lesson
  * @property Student $student
  * @package App\Models
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Visit newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Visit newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Visit query()
+ * @mixin \Eloquent
  */
 class Visit extends Model
 {
