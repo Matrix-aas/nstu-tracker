@@ -149,6 +149,8 @@ $app->singleton(
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'admin_access' => App\Http\Middleware\AdminAccessMiddleware::class,
+    'professor_access' => App\Http\Middleware\ProfessorAccessMiddleware::class,
 ]);
 
 $app->middleware([
