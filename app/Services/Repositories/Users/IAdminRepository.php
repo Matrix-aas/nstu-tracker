@@ -2,8 +2,9 @@
 
 namespace App\Services\Repositories\Users;
 
-use App\Services\Repositories\IRepository;
+use App\Models\Users\Admin;
 
-interface IAdminRepository extends IRepository
+interface IAdminRepository
 {
+    public function findByLoginAndPassword($login, $plainPassword): ?Admin;
 }

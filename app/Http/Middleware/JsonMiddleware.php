@@ -37,17 +37,12 @@ class JsonMiddleware
                 'message' => $response->getOriginalContent(),
                 'status' => $response->status()
             ], $response->status(), $response->headers->all());
-        } else if (is_bool($response->getOriginalContent())) {
-            $response = new JsonResponse([
-                'message' => $response->getOriginalContent() ? 'success' : 'fail',
-                'status' => $response->status()
-            ], $response->status(), $response->headers->all());
         } else {
             $content = json_decode($response->content(), true);
             if (is_array($content)) {
                 $response = new JsonResponse([
-                    'message' => '',
                     'status' => $response->status(),
+                    'message' => isset($content['message']) ? $content['message'] : ($response->status() == 200 ? 'OK' : 'Error'),
                     'data' => $content
                 ], $response->status(), $response->headers->all());
             }

@@ -2,9 +2,6 @@
 
 namespace App\Services\Users;
 
-use App\Services\ICrudService;
-
-interface IProfessorService extends ICrudService
+interface IProfessorService
 {
-
 }

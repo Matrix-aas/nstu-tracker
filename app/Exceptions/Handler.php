@@ -47,19 +47,16 @@ class Handler extends ExceptionHandler
     {
         // Define the response
         $response = [
-            'errors' => 'Sorry, something went wrong.'
+            'message' => $e->getMessage()
         ];
 
         // If the app is in debug mode
         if (env('APP_DEBUG', config('app.debug', false))) {
             // Add the exception class name, message and stack trace to response
             $response['exception'] = get_class($e); // Reflection might be better here
-            $response['message'] = $e->getMessage();
-            $response['trace'] = $e->getTrace();
         }
 
-        // Default response of 400
-        $status = 400;
+        $status = (is_numeric($e->getCode()) && $e->getCode() > 0) ? $e->getCode() : 400;
 
         // Return a JSON response with the response array and status code
         return response()->json($response, $status);

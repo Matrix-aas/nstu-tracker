@@ -16,16 +16,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $datetime
  * @property integer $professor_id
  * @property Professor $professor
- * @property Collection $disciplines
+ * @property Discipline $discipline
  * @property Collection $groups
- * @package app\Models
+ * @package App\Models
  */
 class Lesson extends Model
 {
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'datetime', 'professor_id'
+        'discipline_id', 'name', 'datetime', 'professor_id'
     ];
 
     protected $dates = [
@@ -41,11 +41,11 @@ class Lesson extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function disciplines()
+    public function discipline()
     {
-        return $this->belongsToMany(Discipline::class, 'discipline_lesson', 'lesson_id', 'discipline_id', 'id', 'id');
+        return $this->hasOne(Discipline::class, 'id', 'discipline_id');
     }
 
     /**

@@ -5,29 +5,23 @@ namespace App\Services\Users;
 use App\DTO\AbstractDTO;
 use App\DTO\AdminDTO;
 use App\Models\Users\Admin;
-use App\Services\EmptyCrudService;
+use App\Services\IApiTokenService;
 use App\Services\Repositories\Users\IAdminRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Hash;
 
-class AdminService extends EmptyCrudService implements IAdminService
+class AdminService implements IAdminService
 {
     private $adminRepository;
+    private $apiTokenService;
 
-    public function __construct(IAdminRepository $adminRepository)
+    public function __construct(
+        IAdminRepository $adminRepository,
+        IApiTokenService $apiTokenService
+    )
     {
         $this->adminRepository = $adminRepository;
-    }
-
-    public function findAll(): Collection
-    {
-        return $this->adminRepository->findAll();
-    }
-
-    public function findById(int $id): Model
-    {
-        return $this->adminRepository->findById($id);
+        $this->apiTokenService = $apiTokenService;
     }
 
     /**
@@ -40,12 +34,36 @@ class AdminService extends EmptyCrudService implements IAdminService
         /** @var AdminDTO $dto */
         /** @var Admin $adminModel */
         $adminModel = $dto->buildModel(Admin::class);
-        $adminModel->password = Hash::make($dto->getPassword());
+        $adminModel->password = Hash::make($dto->getPlainPassword());
         return $adminModel->save();
     }
 
-    public function delete(int $id): bool
+    public function findByLoginAndPassword($login, $plainPassword): ?Admin
     {
-        return $this->adminRepository->delete($this->findById($id));
+        return $this->adminRepository->findByLoginAndPassword($login, $plainPassword);
+    }
+
+    /**
+     * @param $login
+     * @param $plainPassword
+     * @param null $ip
+     * @param bool $remeber
+     * @return string
+     * @throws AuthorizationException
+     * @throws \RuntimeException
+     */
+    public function authAdmin($login, $plainPassword, $ip = null, $remeber = false): string
+    {
+        /** @var Admin $admin */
+        $admin = $this->findByLoginAndPassword($login, $plainPassword);
+
+        if (!$admin)
+            throw new AuthorizationException("Login or password incorrect!");
+
+        $apiToken = $this->apiTokenService->createNewTokenForUser($admin, $ip, $remeber);
+        if (!$apiToken)
+            throw new \RuntimeException("Something went wrong!");
+
+        return $apiToken->token;
     }
 }

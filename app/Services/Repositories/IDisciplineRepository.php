@@ -1,10 +1,8 @@
 <?php
 
-
 namespace App\Services\Repositories;
 
-
-interface IDisciplineRepository extends IRepository
+interface IDisciplineRepository
 {
 
 }

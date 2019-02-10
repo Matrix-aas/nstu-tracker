@@ -12,9 +12,4 @@ class Group extends Controller
     {
         $this->groupService = $groupService;
     }
-
-    public function findAll()
-    {
-        return $this->groupService->findAll();
-    }
 }

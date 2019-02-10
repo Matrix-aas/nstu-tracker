@@ -2,9 +2,6 @@
 
 namespace App\Services\Repositories;
 
-use App\Models\Group;
-
-class GroupRepository extends AbstractRepository implements IGroupRepository
+class GroupRepository implements IGroupRepository
 {
-    public $modelClass = Group::class;
 }

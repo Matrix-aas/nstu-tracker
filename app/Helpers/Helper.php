@@ -16,3 +16,16 @@ if (!function_exists("array_remap")) {
         return $res;
     }
 }
+
+if (!function_exists("generate_api_token")) {
+    function generate_api_token()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 24; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+}

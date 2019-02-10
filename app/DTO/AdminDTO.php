@@ -6,14 +6,32 @@ namespace App\DTO;
 
 class AdminDTO extends AbstractDTO
 {
+    /**
+     * @var string
+     */
     public $login;
-    public $firstname;
-    public $surname;
-    public $middlename;
-    public $password;
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
+    /**
+     * @var string
+     */
+    public $firstname;
+
+    /**
+     * @var string
+     */
+    public $surname;
+
+    /**
+     * @var string
+     */
+    public $middlename;
+
+    /**
+     * @var string
+     */
+    public $plainPassword;
+
+    protected $remapping = [
+        'plainPassword' => 'password'
+    ];
 }

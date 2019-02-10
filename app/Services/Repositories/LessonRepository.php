@@ -1,12 +1,7 @@
 <?php
 
-
 namespace App\Services\Repositories;
 
-
-use App\Models\Lesson;
-
-class LessonRepository extends AbstractRepository implements ILessonRepository
+class LessonRepository implements ILessonRepository
 {
-    public $modelClass = Lesson::class;
 }

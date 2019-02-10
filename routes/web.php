@@ -17,10 +17,18 @@ $router->get('/', function () use ($router) {
     return response("Welcome to nstu-tracker restful api server.");
 });
 
-$router->group(['prefix' => 'professor'], function (\Laravel\Lumen\Routing\Router $router) {
-    $router->get(null, "Professor@findAll");
+$router->group(['prefix' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
+    $router->get(null, "Authorization@getAllData");
+    $router->post('student', "Authorization@authStudent");
+    $router->post('professor', "Authorization@authProfessor");
+    $router->post('admin', "Authorization@authAdmin");
+    $router->group(['middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
+        $router->post('logout', "Authorization@logout");
+    });
 });
 
-$router->group(['prefix' => 'group', 'middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
-    $router->get(null, "Group@findAll");
+$router->group(['prefix' => 'test', 'middleware' => 'auth'], function (\Laravel\Lumen\Routing\Router $router) {
+    $router->get(null, function () {
+        return "WOW!";
+    });
 });

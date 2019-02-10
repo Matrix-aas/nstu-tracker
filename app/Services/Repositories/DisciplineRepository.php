@@ -1,10 +1,7 @@
 <?php
 
-
 namespace App\Services\Repositories;
 
-
-class DisciplineRepository extends AbstractRepository implements IDisciplineRepository
+class DisciplineRepository implements IDisciplineRepository
 {
-
 }

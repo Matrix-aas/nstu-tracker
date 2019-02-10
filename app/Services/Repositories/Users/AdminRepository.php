@@ -2,8 +2,17 @@
 
 namespace App\Services\Repositories\Users;
 
-use App\Services\Repositories\AbstractRepository;
+use App\Models\Users\Admin;
+use Illuminate\Support\Facades\Hash;
 
-class AdminRepository extends AbstractRepository implements IAdminRepository
+class AdminRepository implements IAdminRepository
 {
+    public function findByLoginAndPassword($login, $plainPassword): ?Admin
+    {
+        /** @var Admin $admin */
+        $admin = Admin::query()->where("login", $login)->first();
+        if ($admin && Hash::check($plainPassword, $admin->password))
+            return $admin;
+        return null;
+    }
 }

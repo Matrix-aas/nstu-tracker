@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property Collection $professors
  * @property Collection $lessons
- * @package app\Models
+ * @package App\Models
  */
 class Discipline extends Model
 {
@@ -33,10 +33,10 @@ class Discipline extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function lessons()
     {
-        return $this->belongsToMany(Lesson::class, 'discipline_lesson', 'discipline_id', 'lesson_id', 'id', 'id');
+        return $this->hasMany(Discipline::class, 'discipline_id', 'id');
     }
 }

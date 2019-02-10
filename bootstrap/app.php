@@ -51,6 +51,11 @@ $app->singleton(
 /** Repositories bindings */
 
 $app->singleton(
+    \App\Services\Repositories\IApiTokenRepository::class,
+    \App\Services\Repositories\ApiTokenRepository::class
+);
+
+$app->singleton(
     \App\Services\Repositories\Users\IStudentRepository::class,
     \App\Services\Repositories\Users\StudentRepository::class
 );
@@ -87,32 +92,49 @@ $app->singleton(
 
 /** Services bindings */
 $app->singleton(
+    \App\Services\IApiTokenService::class,
+    \App\Services\ApiTokenService::class
+);
+
+$app->singleton(
+    \App\Services\Users\IAuthService::class,
+    \App\Services\Users\AuthService::class
+);
+
+$app->singleton(
     \App\Services\Users\IStudentService::class,
-    \App\Services\Users\StudentService::class);
+    \App\Services\Users\StudentService::class
+);
 
 $app->singleton(
     \App\Services\Users\IAdminService::class,
-    \App\Services\Users\AdminService::class);
+    \App\Services\Users\AdminService::class
+);
 
 $app->singleton(
     \App\Services\Users\IProfessorService::class,
-    \App\Services\Users\ProfessorService::class);
+    \App\Services\Users\ProfessorService::class
+);
 
 $app->singleton(
     \App\Services\IGroupService::class,
-    \App\Services\GroupService::class);
+    \App\Services\GroupService::class
+);
 
 $app->singleton(
     \App\Services\IVisitService::class,
-    \App\Services\VisitService::class);
+    \App\Services\VisitService::class
+);
 
 $app->singleton(
     \App\Services\ILessonService::class,
-    \App\Services\LessonService::class);
+    \App\Services\LessonService::class
+);
 
 $app->singleton(
     \App\Services\IDisciplineService::class,
-    \App\Services\DisciplineService::class);
+    \App\Services\DisciplineService::class
+);
 
 /*
 |--------------------------------------------------------------------------

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $student_id
  * @property Lesson $lesson
  * @property Student $student
- * @package app\Models
+ * @package App\Models
  */
 class Visit extends Model
 {

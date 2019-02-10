@@ -30,7 +30,7 @@ class CreateAdmin extends Command
             'login' => $input->getArgument('login')
         ]);
 
-        $adminDTO->setPassword($this->secret("Password"));
+        $adminDTO->setPlainPassword($this->secret("Password"));
 
         $adminDTO->setFirstname($this->ask("Firstname"));
         $adminDTO->setSurname($this->ask("Surname"));

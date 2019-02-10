@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-interface ILessonService extends ICrudService
+interface ILessonService
 {
-
 }

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-interface IVisitService extends ICrudService
+interface IVisitService
 {
-
 }
