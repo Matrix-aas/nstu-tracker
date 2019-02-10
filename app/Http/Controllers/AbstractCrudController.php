@@ -37,7 +37,7 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
     {
         $dto = $this->crudService->findById($id);
         if (!$dto)
-            throw new ModelNotFoundException();
+            throw new ModelNotFoundException("Model with id '$id' not found!", 404);
         return $dto;
     }
 

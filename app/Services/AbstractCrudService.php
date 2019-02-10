@@ -101,7 +101,7 @@ abstract class AbstractCrudService implements IAbstractCrudService
     {
         $model = $this->crudRepository->findById($id);
         if (!$model)
-            throw new ModelNotFoundException("Model with id '$id' not found!");
+            throw new ModelNotFoundException("Model with id '$id' not found!", 404);
         return $this->crudRepository->delete($model);
     }
 
