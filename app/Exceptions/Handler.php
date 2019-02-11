@@ -51,9 +51,10 @@ class Handler extends ExceptionHandler
         ];
 
         if ($e instanceof ValidationException && !empty($e->errors())) {
-            $response['message'] = implode("; ", array_map(function ($value) {
+            $response['message'] = "Validation exception!";
+            $response['messages'] = array_map(function ($value) {
                 return $value[0];
-            }, $e->errors()));
+            }, $e->errors());
         }
 
         // If the app is in debug mode

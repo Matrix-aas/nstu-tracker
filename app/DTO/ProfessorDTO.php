@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class AdminDTO extends AbstractDTO
+class ProfessorDTO extends AbstractDTO
 {
     /**
      * @var integer

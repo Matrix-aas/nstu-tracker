@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-abstract class AbstractDTO implements Arrayable
+abstract class AbstractDTO extends \StdClass implements Arrayable
 {
     private $validationRules = null;
     private $validationMessages = null;
 
+    /**
+     * Warning! Remapping only in DTO -> Model side!
+     *
+     * @var array
+     */
     protected $remapping = [];
 
     /**
@@ -82,23 +87,37 @@ abstract class AbstractDTO implements Arrayable
     }
 
     /**
+     * Convert all this class fields to array and remap it by remapping rules
+     * @return array
+     */
+    public function toRemappedArray()
+    {
+        return array_remap($this->toArray(), $this->remapping);
+    }
+
+    /**
      * Fill model attributes from DTO
      * @param Model $model
      * @throws ValidationException
      */
     public function toModel(Model $model)
     {
-        $attributes = array_remap($this->toArray(), $this->remapping);
+        $origAttributes = $this->toArray();
+        $attributes = $this->toRemappedArray();
 
         if ($this->validationRules || property_exists($model, "validationRules")) {
-            $validator = Validator::make($attributes, $this->validationRules ?? $model->validationRules, $this->validationMessages ?? []);
+            if ($this->validationRules)
+                $validator = Validator::make($origAttributes, $this->validationRules, $this->validationMessages ?? []);
+            else
+                $validator = Validator::make($attributes, $model->validationRules, $this->validationMessages ?? []);
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
         }
 
+        $fillableFields = array_merge($model->getFillable(), $model->getHidden());
         foreach ($attributes as $key => $value) {
-            if (in_array($key, $model->getFillable())) {
+            if (in_array($key, $fillableFields)) {
                 $model->setAttribute($key, $value);
             }
         }

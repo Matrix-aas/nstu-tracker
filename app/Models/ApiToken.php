@@ -60,7 +60,7 @@ class ApiToken extends Model
 
     public function isTokenExpired()
     {
-        return !$this->isRemembered() && (new Carbon())->diff($this->updated_at)->m > static::TOKEN_EXPIRED_MINUTES;
+        return !$this->isRemembered() && (new Carbon())->diffInMinutes($this->updated_at) > static::TOKEN_EXPIRED_MINUTES;
     }
 
     /**

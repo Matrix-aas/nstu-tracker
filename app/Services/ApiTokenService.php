@@ -28,7 +28,8 @@ class ApiTokenService implements IApiTokenService
         if (!$apiToken)
             return null;
         if ($apiToken->isTokenExpired()) {
-            $this->delete($apiToken);
+            if ($apiToken->exists)
+                $this->delete($apiToken);
             return null;
         }
         $this->apiTokenRepository->touch($apiToken);

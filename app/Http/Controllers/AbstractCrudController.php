@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Http\Controllers;
-
 
 use App\DTO\AbstractDTO;
 use App\Services\IAbstractCrudService;

@@ -2,13 +2,20 @@
 
 namespace App\Services\Users;
 
+use App\DTO\AbstractDTO;
+use App\DTO\ProfessorDTO;
 use App\Models\Users\Professor;
+use App\Services\AbstractCrudService;
 use App\Services\IApiTokenService;
 use App\Services\Repositories\Users\IProfessorRepository;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Hash;
 
-class ProfessorService implements IProfessorService
+class ProfessorService extends AbstractCrudService implements IProfessorService
 {
+    protected $modelClass = Professor::class;
+    protected $dtoClass = ProfessorDTO::class;
+
     private $professorRepository;
     private $apiTokenService;
 
@@ -19,6 +26,7 @@ class ProfessorService implements IProfessorService
     {
         $this->professorRepository = $professorRepository;
         $this->apiTokenService = $apiTokenService;
+        parent::__construct($professorRepository);
     }
 
     public function findByLoginAndPassword($login, $plainPassword): ?Professor
@@ -48,5 +56,12 @@ class ProfessorService implements IProfessorService
             throw new \RuntimeException("Something went wrong!");
 
         return $apiToken->token;
+    }
+
+    protected function handleDto(AbstractDTO $DTO)
+    {
+        /** @var ProfessorDTO $DTO */
+        $DTO->password = Hash::make($DTO->getPlainPassword());
+        parent::handleDto($DTO);
     }
 }

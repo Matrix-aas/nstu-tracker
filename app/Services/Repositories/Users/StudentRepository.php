@@ -3,10 +3,13 @@
 namespace App\Services\Repositories\Users;
 
 use App\Models\Users\Student;
+use App\Services\Repositories\AbstractCrudRepository;
 use Illuminate\Support\Facades\Hash;
 
-class StudentRepository implements IStudentRepository
+class StudentRepository extends AbstractCrudRepository implements IStudentRepository
 {
+    protected $modelClass = Student::class;
+
     public function findByLoginAndPassword($login, $plainPassword): ?Student
     {
         /** @var Student $student */

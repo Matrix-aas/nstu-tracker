@@ -3,10 +3,13 @@
 namespace App\Services\Repositories\Users;
 
 use App\Models\Users\Professor;
+use App\Services\Repositories\AbstractCrudRepository;
 use Illuminate\Support\Facades\Hash;
 
-class ProfessorRepository implements IProfessorRepository
+class ProfessorRepository extends AbstractCrudRepository implements IProfessorRepository
 {
+    protected $modelClass = Professor::class;
+
     public function findByLoginAndPassword($login, $plainPassword): ?Professor
     {
         /** @var Professor $professor */

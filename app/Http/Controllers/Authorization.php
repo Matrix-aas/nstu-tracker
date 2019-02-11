@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\AdminDTO;
+use App\DTO\ProfessorDTO;
+use App\DTO\StudentDTO;
 use App\Models\Users\Admin;
 use App\Services\Users\IAdminService;
 use App\Services\Users\IAuthService;
 use App\Services\Users\IProfessorService;
 use App\Services\Users\IStudentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -69,7 +73,7 @@ class Authorization extends Controller
 
         $token = $this->studentService->auth($login, $password, $ip_verify ? $request->ip() : null, $remember);
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token, 'user' => new StudentDTO(Auth::user())]);
     }
 
     /**
@@ -84,7 +88,7 @@ class Authorization extends Controller
 
         $token = $this->professorService->auth($login, $password, $ip_verify ? $request->ip() : null, $remember);
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token, 'user' => new ProfessorDTO(Auth::user())]);
     }
 
     /**
@@ -99,7 +103,7 @@ class Authorization extends Controller
 
         $token = $this->adminService->auth($login, $password, $ip_verify ? $request->ip() : null, $remember);
 
-        return response()->json(['token' => $token]);
+        return response()->json(['token' => $token, 'user' => new AdminDTO(Auth::user())]);
     }
 
     public function logout()

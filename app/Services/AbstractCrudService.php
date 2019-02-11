@@ -42,6 +42,7 @@ abstract class AbstractCrudService implements IAbstractCrudService
      */
     public function create(AbstractDTO $DTO): ?AbstractDTO
     {
+        $this->handleDto($DTO);
         /** @var Model $model */
         $model = $DTO->buildModel($this->modelClass);
         if ($this->crudRepository->create($model)) {
@@ -64,6 +65,7 @@ abstract class AbstractCrudService implements IAbstractCrudService
             throw new HttpException(500, "DTO Id can't be null!");
         if (!$this->crudRepository->exists($DTO->getId()))
             throw new ModelNotFoundException("Model with id '" . $DTO->getId() . "' not found!", 404);
+        $this->handleDto($DTO);
         /** @var Model $model */
         $model = $DTO->buildModel($this->modelClass);
         if ($this->crudRepository->update($model)) {
@@ -82,6 +84,8 @@ abstract class AbstractCrudService implements IAbstractCrudService
     {
         if (!isset($DTO->id))
             throw new \RuntimeException("DTO '" . $this->dtoClass . "' field 'id' not found!", 500);
+
+        $this->handleDto($DTO);
 
         /** @var Model $model */
         $model = $DTO->buildModel($this->modelClass);
@@ -108,5 +112,9 @@ abstract class AbstractCrudService implements IAbstractCrudService
     public function getDTOClass(): string
     {
         return $this->dtoClass;
+    }
+
+    protected function handleDto(AbstractDTO $DTO)
+    {
     }
 }

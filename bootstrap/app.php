@@ -50,88 +50,88 @@ $app->singleton(
 
 /** Repositories bindings */
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\IApiTokenRepository::class,
     \App\Services\Repositories\ApiTokenRepository::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\Users\IStudentRepository::class,
     \App\Services\Repositories\Users\StudentRepository::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\Users\IProfessorRepository::class,
     \App\Services\Repositories\Users\ProfessorRepository::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\Users\IAdminRepository::class,
     \App\Services\Repositories\Users\AdminRepository::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\IGroupRepository::class,
     \App\Services\Repositories\GroupRepository::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\IVisitRepository::class,
     \App\Services\Repositories\VisitRepository::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\ILessonRepository::class,
     \App\Services\Repositories\LessonRepository::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Repositories\IDisciplineRepository::class,
     \App\Services\Repositories\DisciplineRepository::class
 );
 
 /** Services bindings */
-$app->singleton(
+$app->bind(
     \App\Services\IApiTokenService::class,
     \App\Services\ApiTokenService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Users\IAuthService::class,
     \App\Services\Users\AuthService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Users\IStudentService::class,
     \App\Services\Users\StudentService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Users\IAdminService::class,
     \App\Services\Users\AdminService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\Users\IProfessorService::class,
     \App\Services\Users\ProfessorService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\IGroupService::class,
     \App\Services\GroupService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\IVisitService::class,
     \App\Services\VisitService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\ILessonService::class,
     \App\Services\LessonService::class
 );
 
-$app->singleton(
+$app->bind(
     \App\Services\IDisciplineService::class,
     \App\Services\DisciplineService::class
 );

@@ -2,7 +2,7 @@
 
 namespace App\DTO;
 
-class AdminDTO extends AbstractDTO
+class StudentDTO extends AbstractDTO
 {
     /**
      * @var integer
@@ -41,7 +41,7 @@ class AdminDTO extends AbstractDTO
     public function __construct($attributes = null)
     {
         parent::__construct($attributes);
-        
+
         $this->setValidationRules([
             "login" => "required|string|min:3",
             "firstname" => "required|string|min:2",

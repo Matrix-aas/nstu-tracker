@@ -3,9 +3,10 @@
 namespace App\Services\Users;
 
 use App\Models\Users\Student;
+use App\Services\IAbstractCrudService;
 use Illuminate\Auth\Access\AuthorizationException;
 
-interface IStudentService
+interface IStudentService extends IAbstractCrudService
 {
     public function findByLoginAndPassword($login, $plainPassword): ?Student;
 

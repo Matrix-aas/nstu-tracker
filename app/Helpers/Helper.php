@@ -8,7 +8,7 @@ if (!function_exists("array_remap")) {
             return $array;
         $res = [];
         foreach ($array as $key => $value) {
-            if (isset($mappings[$key]))
+            if (isset($mappings[$key]) && !isset($array[$mappings[$key]]))
                 $res[$mappings[$key]] = $value;
             else
                 $res[$key] = $value;

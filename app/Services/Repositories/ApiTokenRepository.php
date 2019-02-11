@@ -41,7 +41,7 @@ class ApiTokenRepository implements IApiTokenRepository
     public function delete(ApiToken $token): bool
     {
         try {
-            return $token->delete();
+            return $token->delete() === true;
         } catch (\Exception $exception) {
             return false;
         }
