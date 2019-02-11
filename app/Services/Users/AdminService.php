@@ -2,7 +2,6 @@
 
 namespace App\Services\Users;
 
-use App\DTO\AbstractDTO;
 use App\DTO\AdminDTO;
 use App\Models\Users\Admin;
 use App\Services\IApiTokenService;
@@ -25,15 +24,15 @@ class AdminService implements IAdminService
     }
 
     /**
-     * @param AbstractDTO $dto
+     * @param AdminDTO $dto
      * @return bool
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function save(AbstractDTO $dto): bool
+    public function save(AdminDTO $dto): bool
     {
         /** @var AdminDTO $dto */
         /** @var Admin $adminModel */
-        $adminModel = $dto->buildModel(Admin::class);
+        $adminModel = $dto->buildModel(Admin::class, true);
         $adminModel->password = Hash::make($dto->getPlainPassword());
         return $adminModel->save();
     }

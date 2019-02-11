@@ -2,12 +2,15 @@
 
 namespace App\Services\Users;
 
+use App\DTO\AdminDTO;
 use App\Models\Users\Admin;
 use Illuminate\Auth\Access\AuthorizationException;
 
 interface IAdminService
 {
     public function findByLoginAndPassword($login, $plainPassword): ?Admin;
+
+    public function save(AdminDTO $dto): bool;
 
     /**
      * @param $login

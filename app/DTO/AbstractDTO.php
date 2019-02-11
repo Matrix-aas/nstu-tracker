@@ -87,6 +87,19 @@ abstract class AbstractDTO extends \StdClass implements Arrayable
     }
 
     /**
+     * Remove empty fields from DTO
+     * Use for updating models
+     */
+    public function removeEmptyFields()
+    {
+        $attributes = $this->toArray();
+        foreach ($attributes as $key => $value) {
+            if (empty($value))
+                unset($this->{$key});
+        }
+    }
+
+    /**
      * Convert all this class fields to array and remap it by remapping rules
      * @return array
      */
@@ -98,18 +111,19 @@ abstract class AbstractDTO extends \StdClass implements Arrayable
     /**
      * Fill model attributes from DTO
      * @param Model $model
+     * @param bool $validate
      * @throws ValidationException
      */
-    public function toModel(Model $model)
+    public function toModel(Model $model, bool $validate = false)
     {
-        $origAttributes = $this->toArray();
         $attributes = $this->toRemappedArray();
 
-        if ($this->validationRules || property_exists($model, "validationRules")) {
-            if ($this->validationRules)
-                $validator = Validator::make($origAttributes, $this->validationRules, $this->validationMessages ?? []);
-            else
+        if ($validate && ($this->validationRules || property_exists($model, "validationRules"))) {
+            if ($this->validationRules) {
+                $validator = Validator::make($this->toArray(), $this->validationRules, $this->validationMessages ?? []);
+            } else {
                 $validator = Validator::make($attributes, $model->validationRules, $this->validationMessages ?? []);
+            }
             if ($validator->fails()) {
                 throw new ValidationException($validator);
             }
@@ -126,10 +140,11 @@ abstract class AbstractDTO extends \StdClass implements Arrayable
     /**
      * Create or load Model and fill it attributes from DTO
      * @param string $modelClass
+     * @param bool $validate
      * @return Model
      * @throws ValidationException
      */
-    public function buildModel(string $modelClass): Model
+    public function buildModel(string $modelClass, bool $validate = false): Model
     {
         if (property_exists($this, "id") && !empty($this->getId())) {
             $model = $modelClass::query()->find($this->getId());
@@ -139,7 +154,7 @@ abstract class AbstractDTO extends \StdClass implements Arrayable
             $model->setAttribute($model->getKeyName(), $this->getId());
         } else
             $model = new $modelClass();
-        $this->toModel($model);
+        $this->toModel($model, $validate);
         return $model;
     }
 

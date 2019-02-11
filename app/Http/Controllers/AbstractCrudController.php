@@ -90,6 +90,12 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
         $dto = $this->buildDto();
         $validationRules = array_merge($dto->getValidationRules(), ['id' => 'required|integer|min:1']);
         if ($validationRules) {
+
+            array_walk($validationRules, function (&$value, $key) {
+                if ($key != 'id')
+                    $value = implode("|", array_diff(explode("|", $value), ['required']));
+            });
+
             $validationMessages = $dto->getValidationMessages();
             $validator = Validator::make(array_merge($request->input(), ['id' => $id]), $validationRules, $validationMessages ?? []);
             if ($validator->fails()) {
@@ -100,6 +106,7 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
         try {
             $dto = $this->buildDto($request->post());
             $dto->setId($id);
+            $dto->removeEmptyFields();
         } catch (\InvalidArgumentException $exception) {
             throw new \HttpInvalidParamException("One of object attribute is invalid!", 400);
         }

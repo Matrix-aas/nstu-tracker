@@ -61,7 +61,8 @@ class StudentService extends AbstractCrudService implements IStudentService
     protected function handleDto(AbstractDTO $DTO)
     {
         /** @var StudentDTO $DTO */
-        $DTO->password = Hash::make($DTO->getPlainPassword());
+        if (isset($DTO->plainPassword) && !empty($DTO->getPlainPassword()))
+            $DTO->password = Hash::make($DTO->getPlainPassword());
         parent::handleDto($DTO);
     }
 }

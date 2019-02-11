@@ -44,7 +44,7 @@ abstract class AbstractCrudService implements IAbstractCrudService
     {
         $this->handleDto($DTO);
         /** @var Model $model */
-        $model = $DTO->buildModel($this->modelClass);
+        $model = $DTO->buildModel($this->modelClass, true);
         if ($this->crudRepository->create($model)) {
             return new $this->dtoClass($model);
         } else {
