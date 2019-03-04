@@ -7,6 +7,7 @@ use App\Models\Users\Admin;
 use App\Services\IApiTokenService;
 use App\Services\Repositories\Users\IAdminRepository;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminService implements IAdminService
@@ -62,6 +63,8 @@ class AdminService implements IAdminService
         $apiToken = $this->apiTokenService->createNewTokenForUser($admin, $ip, $remeber);
         if (!$apiToken)
             throw new \RuntimeException("Something went wrong!");
+
+        Auth::setUser($admin);
 
         return $apiToken->token;
     }

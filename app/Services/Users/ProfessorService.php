@@ -9,6 +9,7 @@ use App\Services\AbstractCrudService;
 use App\Services\IApiTokenService;
 use App\Services\Repositories\Users\IProfessorRepository;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class ProfessorService extends AbstractCrudService implements IProfessorService
@@ -54,6 +55,8 @@ class ProfessorService extends AbstractCrudService implements IProfessorService
         $apiToken = $this->apiTokenService->createNewTokenForUser($professor, $ip, $remeber);
         if (!$apiToken)
             throw new \RuntimeException("Something went wrong!");
+
+        Auth::setUser($professor);
 
         return $apiToken->token;
     }
