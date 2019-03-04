@@ -25,4 +25,5 @@ $router->group(['middleware' => 'admin_access'], function (\Laravel\Lumen\Routin
 
 $router->group(['middleware' => 'professor_access'], function (\Laravel\Lumen\Routing\Router $router) {
     \App\Http\Controllers\Student::setupRouter($router);
+    \App\Http\Controllers\Lesson::setupRouter($router);
 });

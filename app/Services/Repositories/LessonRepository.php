@@ -2,6 +2,9 @@
 
 namespace App\Services\Repositories;
 
-class LessonRepository implements ILessonRepository
+use App\Models\Lesson;
+
+class LessonRepository extends AbstractCrudRepository implements ILessonRepository
 {
+    protected $modelClass = Lesson::class;
 }

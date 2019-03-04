@@ -2,6 +2,6 @@
 
 namespace App\Services;
 
-interface ILessonService
+interface ILessonService extends IAbstractCrudService
 {
 }
