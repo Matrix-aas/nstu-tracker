@@ -2,6 +2,10 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+$router->options('/{any:.*}', function () {
+    return '';
+});
+
 $router->get('/', function () use ($router) {
     return response("Welcome to nstu-tracker restful api server.");
 });
