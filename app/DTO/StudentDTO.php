@@ -32,10 +32,22 @@ class StudentDTO extends AbstractDTO
     /**
      * @var string
      */
+    public $deviceUid;
+
+    /**
+     * @var integer
+     */
+    public $groupId;
+
+    /**
+     * @var string
+     */
     public $plainPassword;
 
     protected $remapping = [
-        'plainPassword' => 'password'
+        'plainPassword' => 'password',
+        'deviceUid' => 'device_uid',
+        'groupId' => 'group_id'
     ];
 
     public function __construct($attributes = null)
@@ -47,6 +59,8 @@ class StudentDTO extends AbstractDTO
             "firstname" => "required|string|min:2",
             "surname" => "required|string|min:2",
             "middlename" => "required|string|min:2",
+            "deviceUid" => "required|string|min:3",
+            "groupId" => "required|integer|min:1|exists:groups,id",
             "plainPassword" => "required|string|min:3"
         ]);
     }
