@@ -44,7 +44,7 @@ abstract class AbstractCrudRepository implements IAbstractCrudRepository
     public function delete(Model $model): bool
     {
         try {
-            return $model->delete();
+            return $model->delete() === true;
         } catch (\Exception $exception) {
             return false;
         }

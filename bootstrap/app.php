@@ -100,6 +100,11 @@ $app->bind(
     \App\Services\Repositories\ProfessorDisciplineRepository::class
 );
 
+$app->bind(
+    \App\Services\Repositories\IVisitRepository::class,
+    \App\Services\Repositories\VisitRepository::class
+);
+
 /** Services bindings */
 $app->bind(
     \App\Services\IApiTokenService::class,
@@ -154,6 +159,11 @@ $app->bind(
 $app->bind(
     \App\Services\IProfessorDisciplineService::class,
     \App\Services\ProfessorDisciplineService::class
+);
+
+$app->bind(
+    \App\Services\IVisitService::class,
+    \App\Services\VisitService::class
 );
 
 /*
