@@ -37,7 +37,7 @@ $router->group(['middleware' => 'professor_access'], function (\Laravel\Lumen\Ro
 
 $router->group(['middleware' => 'student_access'], function (\Laravel\Lumen\Routing\Router $router) {
     \App\Http\Controllers\Group::setupRouter($router, ['findAll', 'findById']);
-    \App\Http\Controllers\Discipline::setupRouter($router, ['findAll', 'findById']);
+    \App\Http\Controllers\Discipline::setupRouter($router, ['findAll', 'findById', 'findByProfessorId']);
     \App\Http\Controllers\Lesson::setupRouter($router, ['findAll', 'findById']);
 });
 

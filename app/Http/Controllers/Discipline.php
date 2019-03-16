@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\DisciplineDTO;
 use App\Services\IDisciplineService;
 use App\Services\IProfessorDisciplineService;
 use Illuminate\Http\Request;
@@ -18,6 +19,18 @@ class Discipline extends AbstractCrudController
     {
         parent::__construct($disciplineService);
         $this->professorDisciplineService = $professorDisciplineService;
+    }
+
+    public function findByProfessorId(Request $request, int $professorId)
+    {
+        /** @var IDisciplineService $service */
+        $service = $this->crudService;
+        $disciplines = $service->findByProfessorId($professorId);
+        $result = [];
+        foreach ($disciplines as $discipline) {
+            $result[] = new DisciplineDTO($discipline);
+        }
+        return $result;
     }
 
     /**
@@ -46,7 +59,7 @@ class Discipline extends AbstractCrudController
      * @param Router $router
      * @param array $functionality
      */
-    public static function setupRouter(Router $router, array $functionality = ['findAll', 'findById', 'create', 'update', 'delete', 'attachProfessor', 'detachProfessor'])
+    public static function setupRouter(Router $router, array $functionality = ['findAll', 'findById', 'create', 'update', 'delete', 'attachProfessor', 'detachProfessor', 'findByProfessorId'])
     {
         parent::setupRouter($router, $functionality);
 
@@ -54,5 +67,7 @@ class Discipline extends AbstractCrudController
             self::addToRouter($router, 'put', '{id:[0-9]+}/professor/{professorId:[0-9]+}/attach', "attachProfessor");
         if (in_array('detachProfessor', $functionality))
             self::addToRouter($router, 'put', '{id:[0-9]+}/professor/{professorId:[0-9]+}/detach', "detachProfessor");
+        if (in_array('findByProfessorId', $functionality))
+            self::addToRouter($router, 'get', 'find/professor/{professorId:[0-9]+}', "findByProfessorId");
     }
 }
