@@ -6,6 +6,7 @@ use App\Models\Lesson;
 use App\Models\Visit;
 use App\Services\Repositories\IVisitRepository;
 use Carbon\Carbon;
+use Illuminate\Contracts\Queue\EntityNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -31,7 +32,7 @@ class VisitService implements IVisitService
     public function mark($studentIds, int $lessonId, Carbon $date)
     {
         if (!Lesson::query()->whereKey($lessonId)->exists())
-            throw new NotFoundHttpException("Lesson with id:$lessonId not found");
+            throw new EntityNotFoundException("Lesson", $lessonId);
         if (is_numeric($studentIds))
             return $this->repository->mark($studentIds, $lessonId, $date);
         else if (!is_array($studentIds))
