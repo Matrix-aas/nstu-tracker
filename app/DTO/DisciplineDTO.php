@@ -2,6 +2,9 @@
 
 namespace App\DTO;
 
+use App\Models\Discipline;
+use Illuminate\Database\Eloquent\Model;
+
 class DisciplineDTO extends AbstractDTO
 {
     /**
@@ -20,5 +23,16 @@ class DisciplineDTO extends AbstractDTO
         $this->setValidationRules([
             "name" => "required|string|min:3"
         ]);
+    }
+
+    protected function handleModelToDtoParsing(Model $model)
+    {
+        parent::handleModelToDtoParsing($model);
+
+        if ($model instanceof Discipline) {
+            $this->professors = array_map(function ($elem) {
+                return $elem['id'];
+            }, $model->professors()->get(['id'])->toArray());
+        }
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\DTO;
 
+use App\Models\Users\Professor;
+use Illuminate\Database\Eloquent\Model;
+
 class ProfessorDTO extends AbstractDTO
 {
     /**
@@ -41,7 +44,7 @@ class ProfessorDTO extends AbstractDTO
     public function __construct($attributes = null)
     {
         parent::__construct($attributes);
-        
+
         $this->setValidationRules([
             "login" => "required|string|min:3",
             "firstname" => "required|string|min:2",
@@ -49,5 +52,16 @@ class ProfessorDTO extends AbstractDTO
             "middlename" => "required|string|min:2",
             "plainPassword" => "required|string|min:3"
         ]);
+    }
+
+    protected function handleModelToDtoParsing(Model $model)
+    {
+        parent::handleModelToDtoParsing($model);
+
+        if ($model instanceof Professor) {
+            $this->disciplines = array_map(function ($elem) {
+                return $elem['id'];
+            }, $model->disciplines()->get(['id'])->toArray());
+        }
     }
 }

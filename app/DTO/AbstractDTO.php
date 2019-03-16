@@ -34,11 +34,11 @@ abstract class AbstractDTO extends \StdClass implements Arrayable
                         throw new \InvalidArgumentException(static::class . " doesn't have attribute \"" . $key . "\"!");
                 }
             } else if ($attributes instanceof Model) {
-                $attributes = $attributes->getAttributes();
-                foreach ($attributes as $key => $value) {
+                foreach ($attributes->getAttributes() as $key => $value) {
                     if (property_exists($this, $key))
                         $this->{$key} = $value;
                 }
+                $this->handleModelToDtoParsing($attributes);
             } else
                 throw new \InvalidArgumentException('$attributes must be array or Model instance!');
         }
@@ -192,5 +192,9 @@ abstract class AbstractDTO extends \StdClass implements Arrayable
                 throw new \BadMethodCallException();
         } else
             throw new \BadMethodCallException();
+    }
+
+    protected function handleModelToDtoParsing(Model $model)
+    {
     }
 }
