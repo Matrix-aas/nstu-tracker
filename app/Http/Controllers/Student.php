@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\VisitDTO;
 use App\Services\IVisitService;
 use App\Services\Users\IStudentService;
 use Carbon\Carbon;
@@ -23,12 +24,6 @@ class Student extends AbstractCrudController
         $this->visitService = $visitService;
     }
 
-    /**
-     * @param Request $request
-     * @param int $id
-     * @param int $lessonId
-     * @return \App\Models\Visit|\App\Models\Visit[]
-     */
     public function mark(Request $request, int $id, int $lessonId)
     {
         $date = $request->post("date", null);
@@ -37,7 +32,11 @@ class Student extends AbstractCrudController
         } else {
             $date = Carbon::now();
         }
-        return $this->visitService->mark($id, $lessonId, $date);
+        
+        $result = $this->visitService->mark($id, $lessonId, $date);
+        if ($result)
+            return new VisitDTO($result);
+        return response("fail");
     }
 
     /**

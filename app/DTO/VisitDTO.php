@@ -30,4 +30,14 @@ class VisitDTO extends AbstractDTO
      * @var Carbon
      */
     public $updated_at;
+
+    public function __construct($attributes = null)
+    {
+        parent::__construct($attributes);
+
+        $this->setValidationRules([
+            "lesson_id" => "integer",
+            "student_id" => "integer"
+        ]);
+    }
 }
