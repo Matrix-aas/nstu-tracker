@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DTO\AbstractDTO;
+use App\Models\HasDTO;
 use App\Services\IAbstractCrudService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -20,11 +22,29 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
         $this->crudService = $crudService;
     }
 
+    /**
+     * @param Request $request
+     * @return AbstractDTO[]
+     * @throws \ReflectionException
+     */
     public function findAll(Request $request)
     {
-        return $this->crudService->findAll();
-    }
+        $all = $this->crudService->findAll();
+        $dtos = [];
+        foreach ($all as $model) {
+            /** @var Model $model */
+            if (!in_array(
+                HasDTO::class,
+                array_keys((new \ReflectionClass(get_class($model)))->getTraits())
+            )) {
+                continue;
+            }
 
+            $dtoClass = $model->getMyDTOClass();
+            $dtos[] = new $dtoClass($model);
+        }
+        return $dtos;
+    }
 
     /**
      * @param Request $request
@@ -156,7 +176,7 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
                 throw new \RuntimeException("Can't setupRouter on \"" . static::class . "\"", 500);
             }
         }
-        
+
         $router->group(["prefix" => camel_case($className)], function (Router $router) use ($className, $method, $uri, $controllerMethod) {
             $router->$method($uri, $className . "@" . $controllerMethod);
         });

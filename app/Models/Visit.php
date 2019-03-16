@@ -4,6 +4,7 @@
 namespace App\Models;
 
 
+use App\DTO\VisitDTO;
 use App\Models\Users\Student;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Visit extends Model
 {
+    use HasDTO;
+
     protected $fillable = [
         'lesson_id', 'student_id'
     ];
@@ -41,5 +44,10 @@ class Visit extends Model
     public function student()
     {
         return $this->hasOne(Student::class, 'id', 'student_id');
+    }
+
+    public static function getDTOClass(): string
+    {
+        return VisitDTO::class;
     }
 }

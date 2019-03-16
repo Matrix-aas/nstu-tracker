@@ -2,6 +2,9 @@
 
 namespace App\Models\Users;
 
+use App\DTO\AdminDTO;
+use App\Models\HasDTO;
+
 /**
  * Class Admin
  *
@@ -19,5 +22,12 @@ namespace App\Models\Users;
  */
 class Admin extends User
 {
+    use HasDTO;
+
     protected $table = 'admins';
+
+    public static function getDTOClass(): string
+    {
+        return AdminDTO::class;
+    }
 }

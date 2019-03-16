@@ -4,6 +4,7 @@
 namespace App\Models;
 
 
+use App\DTO\LessonDTO;
 use App\Models\Users\Professor;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Lesson extends Model
 {
+    use HasDTO;
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -59,5 +62,10 @@ class Lesson extends Model
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_lesson', 'lesson_id', 'group_id', 'id', 'id');
+    }
+
+    public static function getDTOClass(): string
+    {
+        return LessonDTO::class;
     }
 }

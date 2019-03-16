@@ -62,6 +62,10 @@ class ProfessorDTO extends AbstractDTO
             $this->disciplines = array_map(function ($elem) {
                 return $elem['id'];
             }, $model->disciplines()->get(['id'])->toArray());
+
+            $this->lessons = array_map(function ($elem) {
+                return $elem['id'];
+            }, $model->lessons()->get(['id'])->toArray());
         }
     }
 }

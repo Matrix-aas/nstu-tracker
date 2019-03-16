@@ -34,6 +34,10 @@ class GroupDTO extends AbstractDTO
             $this->lessons = array_map(function ($elem) {
                 return $elem['id'];
             }, $model->lessons()->get(['id'])->toArray());
+
+            $this->students = array_map(function ($elem) {
+                return $elem['id'];
+            }, $model->students()->get(['id'])->toArray());
         }
     }
 }

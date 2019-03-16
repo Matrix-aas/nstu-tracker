@@ -4,6 +4,7 @@
 namespace App\Models;
 
 
+use App\DTO\DisciplineDTO;
 use App\Models\Users\Professor;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Discipline extends Model
 {
+    use HasDTO;
+
     public $timestamps = false;
 
     protected $fillable = [
@@ -42,6 +45,11 @@ class Discipline extends Model
      */
     public function lessons()
     {
-        return $this->hasMany(Discipline::class, 'discipline_id', 'id');
+        return $this->hasMany(Lesson::class, 'discipline_id', 'id');
+    }
+
+    public static function getDTOClass(): string
+    {
+        return DisciplineDTO::class;
     }
 }

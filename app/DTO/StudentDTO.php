@@ -2,6 +2,9 @@
 
 namespace App\DTO;
 
+use App\Models\Users\Student;
+use Illuminate\Database\Eloquent\Model;
+
 class StudentDTO extends AbstractDTO
 {
     /**
@@ -61,5 +64,14 @@ class StudentDTO extends AbstractDTO
             "group_id" => "required|integer|min:1|exists:groups,id",
             "plainPassword" => "required|string|min:3"
         ]);
+    }
+
+    protected function handleModelToDtoParsing(Model $model)
+    {
+        parent::handleModelToDtoParsing($model);
+
+        if ($model instanceof Student) {
+            $this->group = $model->group ? $model->group->id : 0;
+        }
     }
 }

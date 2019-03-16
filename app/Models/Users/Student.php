@@ -2,7 +2,9 @@
 
 namespace App\Models\Users;
 
+use App\DTO\StudentDTO;
 use App\Models\Group;
+use App\Models\HasDTO;
 
 /**
  * Class Student
@@ -24,6 +26,8 @@ use App\Models\Group;
  */
 class Student extends User
 {
+    use HasDTO;
+
     protected $table = 'students';
 
     protected $fillable = [
@@ -38,5 +42,10 @@ class Student extends User
     public function group()
     {
         return $this->hasOne(Group::class, 'id', 'group_id');
+    }
+
+    public static function getDTOClass(): string
+    {
+        return StudentDTO::class;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\DTO\ApiTokenDTO;
 use App\Models\Users\Admin;
 use App\Models\Users\Professor;
 use App\Models\Users\Student;
@@ -28,6 +29,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ApiToken extends Model
 {
+    use HasDTO;
+
     const TOKEN_EXPIRED_MINUTES = 60;
 
     protected $primaryKey = "token";
@@ -83,5 +86,10 @@ class ApiToken extends Model
                 throw new \RuntimeException("Unhandled user role!");
         }
         return $this->hasOne($model, 'id', 'user_id');
+    }
+
+    public static function getDTOClass(): string
+    {
+        return ApiTokenDTO::class;
     }
 }

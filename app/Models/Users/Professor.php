@@ -2,7 +2,10 @@
 
 namespace App\Models\Users;
 
+use App\DTO\ProfessorDTO;
 use App\Models\Discipline;
+use App\Models\HasDTO;
+use App\Models\Lesson;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -15,6 +18,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string $middlename
  * @property string $password
  * @property Collection $disciplines
+ * @property Collection $lessons
  * @package App\Models\Users
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Users\Professor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Users\Professor newQuery()
@@ -23,6 +27,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class Professor extends User
 {
+    use HasDTO;
+
     protected $table = 'professors';
 
     /**
@@ -31,5 +37,18 @@ class Professor extends User
     public function disciplines()
     {
         return $this->belongsToMany(Discipline::class, 'professor_discipline', 'professor_id', 'discipline_id', 'id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class, 'professor_id', 'id');
+    }
+
+    public static function getDTOClass(): string
+    {
+        return ProfessorDTO::class;
     }
 }
