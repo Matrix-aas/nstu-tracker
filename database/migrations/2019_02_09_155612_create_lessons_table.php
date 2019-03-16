@@ -17,7 +17,7 @@ class CreateLessonsTable extends Migration
             $table->increments('id');
             $table->integer('discipline_id')->unsigned();
             $table->string("name");
-            $table->timestamp("datetime");
+            $table->dateTime("datetime");
             $table->integer("professor_id")->unsigned();
 
             $table->foreign("discipline_id")->references('id')->on('disciplines')->onDelete('cascade');

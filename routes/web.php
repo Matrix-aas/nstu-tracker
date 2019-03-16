@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Asia/Novosibirsk');
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 $router->options('/{any:.*}', function () {
