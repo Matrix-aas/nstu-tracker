@@ -13,6 +13,11 @@ class VisitRepository implements IVisitRepository
         return Visit::query()->find($id);
     }
 
+    public function findAll(): Collection
+    {
+        return Visit::all();
+    }
+
     public function mark(int $studentId, int $lessonId, Carbon $date): ?Visit
     {
         $visit = new Visit([

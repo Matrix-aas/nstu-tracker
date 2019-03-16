@@ -10,6 +10,8 @@ interface IVisitRepository
 {
     public function findById(int $id): ?Visit;
 
+    public function findAll(): Collection;
+
     public function mark(int $studentId, int $lessonId, Carbon $date): ?Visit;
 
     public function unmark(int $id): bool;

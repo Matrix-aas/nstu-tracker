@@ -159,30 +159,6 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
     }
 
     /**
-     * Add handler from self to router
-     * @param Router $router
-     * @param string $method
-     * @param null|string $uri
-     * @param string $controllerMethod
-     */
-    public static function addToRouter(Router $router, string $method, ?string $uri, string $controllerMethod)
-    {
-        static $className = null;
-
-        if (!$className) {
-            try {
-                $className = (new \ReflectionClass(static::class))->getShortName();
-            } catch (\ReflectionException $exception) {
-                throw new \RuntimeException("Can't setupRouter on \"" . static::class . "\"", 500);
-            }
-        }
-
-        $router->group(["prefix" => camel_case($className)], function (Router $router) use ($className, $method, $uri, $controllerMethod) {
-            $router->$method($uri, $className . "@" . $controllerMethod);
-        });
-    }
-
-    /**
      * Setup default abstract crud router
      * @param Router $router
      * @param array $functionality

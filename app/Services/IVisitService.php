@@ -10,7 +10,15 @@ interface IVisitService
 {
     public function findById(int $id): ?Visit;
 
-    public function mark(int $studentId, int $lessonId, Carbon $date): ?Visit;
+    public function findAll(): Collection;
+
+    /**
+     * @param int|array $studentIds
+     * @param int $lessonId
+     * @param Carbon $date
+     * @return Visit|Visit[]
+     */
+    public function mark($studentIds, int $lessonId, Carbon $date);
 
     public function unmark(int $id): bool;
 
@@ -27,4 +35,6 @@ interface IVisitService
     public function findByLessonAndDate(int $lessonId, Carbon $date): Collection;
 
     public function findByStudentAndLessonAndDate(int $studentId, int $lessonId, Carbon $date): ?Visit;
+
+    public function find(int $studentId = null, int $lessonId = null, Carbon $date = null);
 }
