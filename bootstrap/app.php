@@ -90,6 +90,16 @@ $app->bind(
     \App\Services\Repositories\DisciplineRepository::class
 );
 
+$app->bind(
+    \App\Services\Repositories\IGroupLessonRepository::class,
+    \App\Services\Repositories\GroupLessonRepository::class
+);
+
+$app->bind(
+    \App\Services\Repositories\IProfessorDisciplineRepository::class,
+    \App\Services\Repositories\ProfessorDisciplineRepository::class
+);
+
 /** Services bindings */
 $app->bind(
     \App\Services\IApiTokenService::class,
@@ -134,6 +144,16 @@ $app->bind(
 $app->bind(
     \App\Services\IDisciplineService::class,
     \App\Services\DisciplineService::class
+);
+
+$app->bind(
+    \App\Services\IGroupLessonService::class,
+    \App\Services\GroupLessonService::class
+);
+
+$app->bind(
+    \App\Services\IProfessorDisciplineService::class,
+    \App\Services\ProfessorDisciplineService::class
 );
 
 /*

@@ -24,14 +24,14 @@ $router->group(['prefix' => 'auth'], function (\Laravel\Lumen\Routing\Router $ro
 
 /** == Authorized requests == */
 $router->group(['middleware' => 'admin_access'], function (\Laravel\Lumen\Routing\Router $router) {
-    \App\Http\Controllers\Group::setupRouter($router, ['create', 'update', 'delete']);
-    \App\Http\Controllers\Discipline::setupRouter($router, ['create', 'update', 'delete']);
+    \App\Http\Controllers\Group::setupRouter($router, ['create', 'update', 'delete', 'attachLesson', 'detachLesson']);
+    \App\Http\Controllers\Discipline::setupRouter($router, ['create', 'update', 'delete', 'attachProfessor', 'detachProfessor']);
     \App\Http\Controllers\Professor::setupRouter($router);
 });
 
 $router->group(['middleware' => 'professor_access'], function (\Laravel\Lumen\Routing\Router $router) {
     \App\Http\Controllers\Student::setupRouter($router);
-    \App\Http\Controllers\Lesson::setupRouter($router, ['create', 'update', 'delete']);
+    \App\Http\Controllers\Lesson::setupRouter($router, ['create', 'update', 'delete', 'attachGroup', 'detachGroup']);
 });
 
 $router->group(['middleware' => 'student_access'], function (\Laravel\Lumen\Routing\Router $router) {

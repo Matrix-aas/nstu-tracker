@@ -138,25 +138,47 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
         }
     }
 
+    /**
+     * Add handler from self to router
+     * @param Router $router
+     * @param string $method
+     * @param null|string $uri
+     * @param string $controllerMethod
+     */
+    public static function addToRouter(Router $router, string $method, ?string $uri, string $controllerMethod)
+    {
+        static $className = null;
+
+        if (!$className) {
+            try {
+                $className = (new \ReflectionClass(static::class))->getShortName();
+            } catch (\ReflectionException $exception) {
+                throw new \RuntimeException("Can't setupRouter on \"" . static::class . "\"", 500);
+            }
+        }
+        
+        $router->group(["prefix" => camel_case($className)], function (Router $router) use ($className, $method, $uri, $controllerMethod) {
+            $router->$method($uri, $className . "@" . $controllerMethod);
+        });
+    }
+
+    /**
+     * Setup default abstract crud router
+     * @param Router $router
+     * @param array $functionality
+     */
     public static function setupRouter(Router $router, array $functionality = ['findAll', 'findById', 'create', 'update', 'delete'])
     {
-        try {
-            $className = (new \ReflectionClass(static::class))->getShortName();
-        } catch (\ReflectionException $exception) {
-            throw new \RuntimeException("Can't setupRouter on \"" . static::class . "\"", 500);
-        }
-        $router->group(["prefix" => camel_case($className)], function (Router $router) use ($className, $functionality) {
-            if (in_array('findAll', $functionality))
-                $router->get(null, $className . "@findAll");
-            if (in_array('findById', $functionality))
-                $router->get("{id}", $className . "@findById");
-            if (in_array('create', $functionality))
-                $router->post(null, $className . "@create");
-            if (in_array('update', $functionality))
-                $router->put("{id}", $className . "@update");
-            if (in_array('delete', $functionality))
-                $router->delete("{id}", $className . "@delete");
-        });
+        if (in_array('findAll', $functionality))
+            static::addToRouter($router, 'get', null, "findAll");
+        if (in_array('findById', $functionality))
+            static::addToRouter($router, 'get', "{id}", "findById");
+        if (in_array('create', $functionality))
+            static::addToRouter($router, 'post', null, "create");
+        if (in_array('update', $functionality))
+            static::addToRouter($router, 'put', "{id}", "update");
+        if (in_array('delete', $functionality))
+            static::addToRouter($router, 'delete', "{id}", "delete");
     }
 
     /**
