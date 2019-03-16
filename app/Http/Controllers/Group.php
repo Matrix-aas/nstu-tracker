@@ -51,8 +51,8 @@ class Group extends AbstractCrudController
         parent::setupRouter($router, $functionality);
 
         if (in_array('attachLesson', $functionality))
-            self::addToRouter($router, 'put', '{id}/lesson/{lessonId}/attach', "attachLesson");
+            self::addToRouter($router, 'put', '{id:[0-9]+}/lesson/{lessonId:[0-9]+}/attach', "attachLesson");
         if (in_array('detachLesson', $functionality))
-            self::addToRouter($router, 'put', '{id}/lesson/{lessonId}/detach', "detachLesson");
+            self::addToRouter($router, 'put', '{id:[0-9]+}/lesson/{lessonId:[0-9]+}/detach', "detachLesson");
     }
 }

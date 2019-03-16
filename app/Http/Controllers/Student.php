@@ -48,6 +48,6 @@ class Student extends AbstractCrudController
         parent::setupRouter($router, $functionality);
 
         if (in_array('mark', $functionality))
-            static::addToRouter($router, 'post', '{id}/lesson/{lessonId}/mark', "mark");
+            static::addToRouter($router, 'post', '{id:[0-9]+}/lesson/{lessonId:[0-9]+}/mark', "mark");
     }
 }

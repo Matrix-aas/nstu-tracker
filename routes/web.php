@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Novosibirsk');
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-$router->options('/{any:.*}', function () {
+$router->options('{any:.*}', function () {
     return '';
 });
 
@@ -39,4 +39,13 @@ $router->group(['middleware' => 'student_access'], function (\Laravel\Lumen\Rout
     \App\Http\Controllers\Group::setupRouter($router, ['findAll', 'findById']);
     \App\Http\Controllers\Discipline::setupRouter($router, ['findAll', 'findById']);
     \App\Http\Controllers\Lesson::setupRouter($router, ['findAll', 'findById']);
+});
+
+$router->get('time', function () {
+    $dbTime = \Illuminate\Support\Facades\DB::select(\Illuminate\Support\Facades\DB::raw("SELECT NOW() as db_time;"));
+    $dbTime = $dbTime[0]->db_time;
+    return ['time' => \Carbon\Carbon::now()->format("Y-m-d H:i:s"),
+        'timezone' => date_default_timezone_get(),
+        'db' => $dbTime,
+        'offset' => \Carbon\Carbon::now()->diffInHours(\Carbon\Carbon::parse($dbTime))];
 });

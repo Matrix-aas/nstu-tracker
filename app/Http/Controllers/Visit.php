@@ -103,10 +103,10 @@ class Visit extends Controller
 
     public static function setupRouter(Router $router)
     {
-        static::addToRouter($router, "get", "{id}", "findById");
+        static::addToRouter($router, "get", "{id:[0-9]+}", "findById");
         static::addToRouter($router, "get", "find", "find");
 
-        static::addToRouter($router, "post", "{lessonId}", "mark");
-        static::addToRouter($router, "delete", "{id}", "unmark");
+        static::addToRouter($router, "post", "{lessonId:[0-9]+}", "mark");
+        static::addToRouter($router, "delete", "{id:[0-9]+}", "unmark");
     }
 }

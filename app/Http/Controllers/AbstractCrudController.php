@@ -168,13 +168,13 @@ class AbstractCrudController extends Controller implements IAbstractCrudControll
         if (in_array('findAll', $functionality))
             static::addToRouter($router, 'get', null, "findAll");
         if (in_array('findById', $functionality))
-            static::addToRouter($router, 'get', "{id}", "findById");
+            static::addToRouter($router, 'get', "{id:[0-9]+}", "findById");
         if (in_array('create', $functionality))
             static::addToRouter($router, 'post', null, "create");
         if (in_array('update', $functionality))
-            static::addToRouter($router, 'put', "{id}", "update");
+            static::addToRouter($router, 'put', "{id:[0-9]+}", "update");
         if (in_array('delete', $functionality))
-            static::addToRouter($router, 'delete', "{id}", "delete");
+            static::addToRouter($router, 'delete', "{id:[0-9]+}", "delete");
     }
 
     /**

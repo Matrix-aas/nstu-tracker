@@ -51,8 +51,8 @@ class Discipline extends AbstractCrudController
         parent::setupRouter($router, $functionality);
 
         if (in_array('attachProfessor', $functionality))
-            self::addToRouter($router, 'put', '{id}/professor/{professorId}/attach', "attachProfessor");
+            self::addToRouter($router, 'put', '{id:[0-9]+}/professor/{professorId:[0-9]+}/attach', "attachProfessor");
         if (in_array('detachProfessor', $functionality))
-            self::addToRouter($router, 'put', '{id}/professor/{professorId}/detach', "detachProfessor");
+            self::addToRouter($router, 'put', '{id:[0-9]+}/professor/{professorId:[0-9]+}/detach', "detachProfessor");
     }
 }
