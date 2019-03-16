@@ -33,6 +33,10 @@ class DisciplineDTO extends AbstractDTO
             $this->professors = array_map(function ($elem) {
                 return $elem['id'];
             }, $model->professors()->get(['id'])->toArray());
+
+            $this->lessons = array_map(function ($elem) {
+                return $elem['id'];
+            }, $model->lessons()->get(['id'])->toArray());
         }
     }
 }

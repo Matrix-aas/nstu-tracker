@@ -48,9 +48,10 @@ class LessonDTO extends AbstractDTO
             $this->groups = array_map(function ($elem) {
                 return $elem['id'];
             }, $model->groups()->get(['id'])->toArray());
-            
-            $this->professor = $model->professor ? $model->professor->id : 0;
-            $this->discipline = $model->discipline ? $model->discipline->id : 0;
+
+            $this->visits = array_map(function ($elem) {
+                return $elem['id'];
+            }, $model->visits()->get(['id'])->toArray());
         }
     }
 }

@@ -71,7 +71,9 @@ class StudentDTO extends AbstractDTO
         parent::handleModelToDtoParsing($model);
 
         if ($model instanceof Student) {
-            $this->group = $model->group ? $model->group->id : 0;
+            $this->visits = array_map(function ($elem) {
+                return $elem['id'];
+            }, $model->visits()->get(['id'])->toArray());
         }
     }
 }

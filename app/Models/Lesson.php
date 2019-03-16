@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Professor $professor
  * @property Discipline $discipline
  * @property Collection $groups
+ * @property Collection $visits
  * @package App\Models
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Lesson newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Lesson newQuery()
@@ -62,6 +63,14 @@ class Lesson extends Model
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_lesson', 'lesson_id', 'group_id', 'id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function visits()
+    {
+        return $this->hasMany(Visit::class, 'lesson_id', 'id');
     }
 
     public static function getDTOClass(): string

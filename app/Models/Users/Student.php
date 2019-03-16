@@ -5,6 +5,8 @@ namespace App\Models\Users;
 use App\DTO\StudentDTO;
 use App\Models\Group;
 use App\Models\HasDTO;
+use App\Models\Visit;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class Student
@@ -18,6 +20,7 @@ use App\Models\HasDTO;
  * @property string $device_uid
  * @property integer $group_id
  * @property Group $group
+ * @property Collection $visits
  * @package App\Models\Users
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Users\Student newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Users\Student newQuery()
@@ -42,6 +45,14 @@ class Student extends User
     public function group()
     {
         return $this->hasOne(Group::class, 'id', 'group_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function visits()
+    {
+        return $this->hasMany(Visit::class, 'student_id', 'id');
     }
 
     public static function getDTOClass(): string
