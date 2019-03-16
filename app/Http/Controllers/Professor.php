@@ -24,22 +24,22 @@ class Professor extends AbstractCrudController
      * @param Request $request
      * @param int $id
      * @param int $disciplineId
-     * @return bool
+     * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function attachDiscipline(Request $request, int $id, int $disciplineId)
     {
-        return $this->professorDisciplineService->attachDiscipline($id, $disciplineId);
+        return response($this->professorDisciplineService->attachDiscipline($id, $disciplineId) ? "success" : "fail");
     }
 
     /**
      * @param Request $request
      * @param int $id
      * @param int $disciplineId
-     * @return bool
+     * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function detachDiscipline(Request $request, int $id, int $disciplineId)
     {
-        return $this->professorDisciplineService->detachDiscipline($id, $disciplineId);
+        return response($this->professorDisciplineService->detachDiscipline($id, $disciplineId) ? "success" : "fail");
     }
 
     /**
@@ -49,7 +49,7 @@ class Professor extends AbstractCrudController
     public static function setupRouter(Router $router, array $functionality = ['findAll', 'findById', 'create', 'update', 'delete', 'attachDiscipline', 'detachDiscipline'])
     {
         parent::setupRouter($router, $functionality);
-        
+
         if (in_array('attachDiscipline', $functionality))
             self::addToRouter($router, 'put', '{id}/discipline/{disciplineId}/attach', "attachDiscipline");
         if (in_array('detachDiscipline', $functionality))

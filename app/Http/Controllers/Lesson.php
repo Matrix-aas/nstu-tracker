@@ -24,22 +24,22 @@ class Lesson extends AbstractCrudController
      * @param Request $request
      * @param int $id
      * @param int $groupId
-     * @return bool
+     * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function attachGroup(Request $request, int $id, int $groupId)
     {
-        return $this->groupLessonService->attachGroup($id, $groupId);
+        return response($this->groupLessonService->attachGroup($id, $groupId) ? "success" : "fail");
     }
 
     /**
      * @param Request $request
      * @param int $id
      * @param int $groupId
-     * @return bool
+     * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function detachGroup(Request $request, int $id, int $groupId)
     {
-        return $this->groupLessonService->detachGroup($id, $groupId);
+        return response($this->groupLessonService->detachGroup($id, $groupId) ? "success" : "fail");
     }
 
     /**

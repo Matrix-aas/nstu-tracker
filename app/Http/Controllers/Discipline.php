@@ -24,22 +24,22 @@ class Discipline extends AbstractCrudController
      * @param Request $request
      * @param int $id
      * @param int $professorId
-     * @return bool
+     * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function attachProfessor(Request $request, int $id, int $professorId)
     {
-        return $this->professorDisciplineService->attachProfessor($id, $professorId);
+        return response($this->professorDisciplineService->attachProfessor($id, $professorId) ? "success" : "fail");
     }
 
     /**
      * @param Request $request
      * @param int $id
      * @param int $professorId
-     * @return bool
+     * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function detachProfessor(Request $request, int $id, int $professorId)
     {
-        return $this->professorDisciplineService->detachProfessor($id, $professorId);
+        return response($this->professorDisciplineService->detachProfessor($id, $professorId) ? "success" : "fail");
     }
 
     /**
